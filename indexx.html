@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: chartreuse;
+      }
+      .question {
+        margin-bottom: 20px;
+      }
+      .container {
+        text-align: justify;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <center>
+        <h1>JavaScript Quiz</h1>
+        <form id="quiz">
+          <!-- Question 1 -->
+          <div class="question" data-answer="4">
+            <p>What is 2 + 2?</p>
+            <ul>
+              <li><input type="radio" name="q1" value="3" /> 3</li>
+              <li><input type="radio" name="q1" value="4" /> 4</li>
+              <li><input type="radio" name="q1" value="5" /> 5</li>
+              <li><input type="radio" name="q1" value="6" /> 6</li>
+            </ul>
+            <button type="button" onclick="nextQuestion(this)">Next</button>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="question" data-answer="Paris" style="display: none">
+            <p>What is the capital of France?</p>
+            <ul>
+              <li><input type="radio" name="q2" value="Berlin" /> Berlin</li>
+              <li><input type="radio" name="q2" value="Paris" /> Paris</li>
+              <li><input type="radio" name="q2" value="Madrid" /> Madrid</li>
+              <li><input type="radio" name="q2" value="Rome" /> Rome</li>
+            </ul>
+            <button type="button" onclick="nextQuestion(this)">Next</button>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="question" data-answer="Blue" style="display: none">
+            <p>What color is the sky?</p>
+            <ul>
+              <li><input type="radio" name="q3" value="Green" /> Green</li>
+              <li><input type="radio" name="q3" value="Blue" /> Blue</li>
+              <li><input type="radio" name="q3" value="Yellow" /> Yellow</li>
+              <li><input type="radio" name="q3" value="Red" /> Red</li>
+            </ul>
+            <button type="button" onclick="nextQuestion(this)">Next</button>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="question" data-answer="25" style="display: none">
+            <p>What is 5 * 5?</p>
+            <ul>
+              <li><input type="radio" name="q4" value="20" /> 20</li>
+              <li><input type="radio" name="q4" value="25" /> 25</li>
+              <li><input type="radio" name="q4" value="30" /> 30</li>
+              <li><input type="radio" name="q4" value="35" /> 35</li>
+            </ul>
+            <button type="button" onclick="nextQuestion(this)">Next</button>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="question" data-answer="JavaScript" style="display: none">
+            <p>Which programming language runs in a browser?</p>
+            <ul>
+              <li><input type="radio" name="q5" value="Python" /> Python</li>
+              <li><input type="radio" name="q5" value="Java" /> Java</li>
+              <li>
+                <input type="radio" name="q5" value="JavaScript" /> JavaScript
+              </li>
+              <li><input type="radio" name="q5" value="C++" /> C++</li>
+            </ul>
+            <button type="button" onclick="nextQuestion(this)">Submit</button>
+          </div>
+        </form>
+        <p id="result" style="display: none"></p>
+      </center>
+      <script>
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function nextQuestion(button) {
+          const question = button.parentElement;
+          const selectedOption = question.querySelector(
+            "input[type='radio']:checked"
+          );
+
+          if (!selectedOption) {
+            alert("Please select an answer!");
+            return;
+          }
+
+          const correctAnswer = question.getAttribute("data-answer");
+          if (selectedOption.value === correctAnswer) {
+            score++;
+          }
+
+          question.style.display = "none";
+          currentQuestionIndex++;
+
+          const nextQuestion =
+            document.querySelectorAll(".question")[currentQuestionIndex];
+          if (nextQuestion) {
+            nextQuestion.style.display = "block";
+          } else {
+            showResult();
+          }
+        }
+
+        function showResult() {
+          document.getElementById("quiz").style.display = "none";
+          const resultElement = document.getElementById("result");
+          resultElement.style.display = "block";
+          resultElement.textContent = `You scored ${score} out of ${
+            document.querySelectorAll(".question").length
+          }!`;
+        }
+      </script>
+    </div>
+  </body>
+</html>
